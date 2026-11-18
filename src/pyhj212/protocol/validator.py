@@ -31,15 +31,11 @@ class Validator:
         result = ValidationResult()
 
         if not raw.startswith(START_DELIMITER):
-            result.add_error(
-                f"Message must start with '{START_DELIMITER}'"
-            )
+            result.add_error(f"Message must start with '{START_DELIMITER}'")
             return result
 
         if not raw.endswith(END_DELIMITER):
-            result.add_error(
-                f"Message must end with {END_DELIMITER!r}"
-            )
+            result.add_error(f"Message must end with {END_DELIMITER!r}")
             return result
 
         # Extract content: strip ## prefix and \r\n suffix

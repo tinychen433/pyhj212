@@ -200,9 +200,7 @@ class TestParseValidMessage:
 
         with pytest.raises(ParseError) as exc_info:
             self.parser.parse(raw)
-        assert "separator" in str(exc_info.value).lower() or "&&" in str(
-            exc_info.value
-        )
+        assert "separator" in str(exc_info.value).lower() or "&&" in str(exc_info.value)
 
     def test_length_mismatch(self) -> None:
         """Declared length not matching actual data raises ParseError."""

@@ -100,25 +100,18 @@ class CPParser:
                 if "-" in full_key:
                     factor_code, attr = full_key.split("-", 1)
                     has_factor = True
-                    factor_groups.setdefault(factor_code, []).append(
-                        (attr, value)
-                    )
+                    factor_groups.setdefault(factor_code, []).append((attr, value))
                 else:
                     # Standalone field without factor code
-                    factor_groups.setdefault("__solo__", []).append(
-                        (full_key, value)
-                    )
+                    factor_groups.setdefault("__solo__", []).append((full_key, value))
 
             if has_factor and len(factor_groups) == 1:
                 # All sub-parts share the same factor — group them
                 factor_code = next(iter(factor_groups))
                 children = [
-                    CPField(key=attr, value=val)
-                    for attr, val in factor_groups[factor_code]
+                    CPField(key=attr, value=val) for attr, val in factor_groups[factor_code]
                 ]
-                fields.append(
-                    CPField(key=factor_code, children=children, raw=segment)
-                )
+                fields.append(CPField(key=factor_code, children=children, raw=segment))
             else:
                 # Mixed or no factor — fall back to flat parsing
                 flat_fields = self.parse(segment)

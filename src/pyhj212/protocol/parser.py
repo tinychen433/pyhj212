@@ -47,7 +47,7 @@ class Parser:
             )
 
         # After ##: LLLL<Data><CRC>\r\n
-        payload = raw[len(START_DELIMITER):]
+        payload = raw[len(START_DELIMITER) :]
 
         # Extract declared length (4 digits)
         if len(payload) < 4:

@@ -118,9 +118,7 @@ class TestParseValidCP:
 
     def test_varied_decimal_places(self) -> None:
         """Values with different decimal precision are preserved."""
-        fields = self.parser.parse(
-            "a01007-Avg=-99.0;a01008-Avg=-99;a05024-Avg=-99.00"
-        )
+        fields = self.parser.parse("a01007-Avg=-99.0;a01008-Avg=-99;a05024-Avg=-99.00")
         assert fields[0].value == "-99.0"
         assert fields[1].value == "-99"
         assert fields[2].value == "-99.00"
@@ -144,9 +142,7 @@ class TestParseValidCP:
 
     def test_control_fields(self) -> None:
         """Control fields (PNO, DataTime, RtdInterval) parse correctly."""
-        fields = self.parser.parse(
-            "PNO=000000004;DataTime=20260902082000;RtdInterval=300"
-        )
+        fields = self.parser.parse("PNO=000000004;DataTime=20260902082000;RtdInterval=300")
         assert len(fields) == 3
 
         assert fields[0].key == "PNO"

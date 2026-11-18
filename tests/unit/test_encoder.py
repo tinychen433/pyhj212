@@ -37,8 +37,12 @@ class TestEncodeMessage:
     def test_encode_cn1062_message(self) -> None:
         """Encode a CN=1062 (set RtdInterval) message."""
         header = Header(
-            flag="5", pno="",
-            qn="20160801085857223", st="32", cn="1062", pw="100000",
+            flag="5",
+            pno="",
+            qn="20160801085857223",
+            st="32",
+            cn="1062",
+            pw="100000",
             mn="010000A8900016F000169DC0",
         )
         message = Message(header=header, data="RtdInterval=30")
@@ -59,8 +63,12 @@ class TestEncodeMessage:
     def test_encode_generates_valid_crc(self) -> None:
         """Encoded message CRC is valid after roundtrip."""
         header = Header(
-            flag="5", pno="",
-            qn="20160801085857223", st="32", cn="1062", pw="100000",
+            flag="5",
+            pno="",
+            qn="20160801085857223",
+            st="32",
+            cn="1062",
+            pw="100000",
             mn="010000A8900016F000169DC0",
         )
         message = Message(header=header, data="RtdInterval=30")
@@ -72,13 +80,18 @@ class TestEncodeMessage:
         data_for_crc = raw[6:-6]  # skip ##LLLL and CRC\r\n
 
         from pyhj212.protocol.checksum import calculate_crc
+
         assert calculate_crc(data_for_crc) == int(crc_in_msg, 16)
 
     def test_encode_generates_correct_length(self) -> None:
         """Encoded message length field matches actual data length."""
         header = Header(
-            flag="5", pno="",
-            qn="20160801085857223", st="32", cn="1062", pw="100000",
+            flag="5",
+            pno="",
+            qn="20160801085857223",
+            st="32",
+            cn="1062",
+            pw="100000",
             mn="010000A8900016F000169DC0",
         )
         message = Message(header=header, data="RtdInterval=30")
@@ -105,8 +118,12 @@ class TestEncodeMessage:
     def test_encode_with_cp_data(self) -> None:
         """Message with CP data encodes correctly."""
         header = Header(
-            flag="5", pno="4",
-            qn="20260902083001000", st="31", cn="2051", pw="123456",
+            flag="5",
+            pno="4",
+            qn="20260902083001000",
+            st="31",
+            cn="2051",
+            pw="123456",
             mn="YSRDAQ07ST00002713",
         )
         message = Message(
