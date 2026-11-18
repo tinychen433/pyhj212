@@ -14,6 +14,12 @@ def main() -> None:
     print(f"Data: {message.data}")
     print(f"CRC: {message.crc}")
 
+    raw = "##0439QN=20261118134524147;ST=80;CN=2011;PW=123456;MN=ZC10002443;FLAG=5;CP=&&DataTime=20261118134500;tn0112-Rtd=228.200,tn0112-Flag=N;tn0110-Rtd=229.100,tn0110-Flag=N;tn0109-Rtd=1.000,tn0109-Flag=N;tn0105-Rtd=0.000,tn0105-Flag=N;tn0107-Rtd=0.0,tn0107-Flag=N;tn0111-Rtd=230.000,tn0111-Flag=N;tn0108-Rtd=0.0,tn0108-Flag=N;tn0101-Rtd=0.000,tn0101-Flag=N;tn0103-Rtd=0.000,tn0103-Flag=N;tn0102-Rtd=0.000,tn0102-Flag=N;tn0106-Rtd=0.000,tn0106-Flag=N&&4e00\r\n"
+    message = parser.parse(raw)
+    print(f"Header: {message.header}")
+    print(f"Data: {message.data}")
+    print(f"CRC: {message.crc}")
+
 
 if __name__ == "__main__":
     main()

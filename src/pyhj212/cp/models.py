@@ -37,3 +37,18 @@ class CPField:
             if child.key == key:
                 return child
         return None
+
+    def to_dict(self) -> dict[str, object]:
+        """Convert to a simplified JSON-serializable dictionary.
+
+        Returns a dict keyed by the field name, with children nested as
+        a dict of attribute name to value.
+
+        Returns:
+            Dict like ``{"tn0103": {"Rtd": "228.200", "Flag": "N"}}`` for
+            grouped fields, or ``{"DataTime": "20261118134500"}`` for
+            standalone fields.
+        """
+        if self.children:
+            return {self.key: {c.key: c.value for c in self.children}}
+        return {self.key: self.value} if self.value else {self.key: ""}
