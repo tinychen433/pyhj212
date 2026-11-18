@@ -34,7 +34,7 @@ class Encoder:
         """
         header_str = message.header.to_string()
         body = message.data
-        content = f"{header_str}&&{body}" if body else header_str
+        content = f"{header_str};CP=&&{body}&&"
 
         crc = calculate_crc(content)
         crc_str = f"{crc:04X}"

@@ -59,7 +59,7 @@ class TestParseValidMessage:
         assert msg.header.pw == "123456"
         assert msg.header.mn == "YSRDAQ07ST00002713"
         assert msg.header.st == "31"
-        assert msg.header.flag == 5
+        assert msg.header.flag == "5"
 
         # Data section contains CP fields
         assert "PNO=000000004" in msg.data
@@ -80,8 +80,8 @@ class TestParseValidMessage:
         assert msg.header.cn == "2011"
         assert msg.header.mn == "ST0001"
         assert msg.header.st == "32"
-        assert msg.header.flag == 4
-        assert msg.header.pno == 1
+        assert msg.header.flag == "4"
+        assert msg.header.pno == "1"
 
         # Data section: 84 chars = header(67) + &&(2) + body(15)
         # CRC "9741" follows the data section
@@ -131,7 +131,7 @@ class TestParseValidMessage:
         raw = f"##{len(data):04d}{data}{crc:04X}\r\n"
 
         msg = self.parser.parse(raw)
-        assert msg.header.flag == 0
+        assert msg.header.flag == "0"
 
     def test_large_pno(self) -> None:
         """Message with large PNO value parses correctly."""

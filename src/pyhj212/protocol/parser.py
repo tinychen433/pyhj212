@@ -124,7 +124,7 @@ class Parser:
             cn=cn,
             pw=pw,
             mn=fields.get("MN", ""),
-            flag=int(fields.get("Flag", "0")),
-            pno=int(fields.get("PNO", "0")),
+            flag=fields.get("Flag", ""),
+            pno=fields.get("PNO", ""),
             raw=header_str,
         )

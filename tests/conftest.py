@@ -17,8 +17,8 @@ def sample_header() -> Header:
         pw="123456",
         mn="ST0001",
         st="32",
-        flag=4,
-        pno=1,
+        flag="4",
+        pno="1",
     )
 
 

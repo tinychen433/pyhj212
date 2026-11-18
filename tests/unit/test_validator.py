@@ -123,8 +123,8 @@ class TestValidateMessageObject:
             pw="123456",
             mn="ST0001",
             st="32",
-            flag=4,
-            pno=1,
+            flag="4",
+            pno="1",
         )
         message = Message(header=header, data="w01001-Rtd=12.5")
         result = self.validator.validate_message(message)
@@ -132,7 +132,7 @@ class TestValidateMessageObject:
 
     def test_missing_cn(self) -> None:
         """Message without CN field fails validation."""
-        header = Header(qn="", cn="", pw="123456")
+        header = Header(flag="", pno="", qn="", cn="", pw="123456")
         message = Message(header=header)
         result = self.validator.validate_message(message)
         assert not result.is_valid
@@ -140,7 +140,7 @@ class TestValidateMessageObject:
 
     def test_data_exceeds_maximum(self) -> None:
         """Data longer than 9999 characters fails validation."""
-        header = Header(qn="", cn="2011", pw="123456")
+        header = Header(flag="", pno="", qn="", cn="2011", pw="123456")
         message = Message(header=header, data="x" * 10000)
         result = self.validator.validate_message(message)
         assert not result.is_valid

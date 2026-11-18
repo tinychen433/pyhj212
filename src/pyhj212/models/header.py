@@ -12,6 +12,8 @@ class Header:
     The header contains metadata about the message including the
     protocol version, message type, and routing information.
 
+    All fields are stored as strings to preserve the original format.
+
     Attributes:
         qn: Request number (请求编号), 17-char timestamp format.
         st: System type, identifies the equipment category.
@@ -22,13 +24,14 @@ class Header:
         pno: Packet number for multi-part messages.
     """
 
+    flag: str = ""
+    pno: str = ""
+
     qn: str = ""
     st: str = ""
     cn: str = ""
     pw: str = ""
     mn: str = ""
-    flag: int = 0
-    pno: int = 0
 
     raw: str = field(default="", repr=False, compare=False)
 
@@ -49,6 +52,8 @@ class Header:
             parts.append(f"PW={self.pw}")
         if self.mn:
             parts.append(f"MN={self.mn}")
-        parts.append(f"Flag={self.flag}")
-        parts.append(f"PNO={self.pno}")
+        if self.flag:
+            parts.append(f"Flag={self.flag}")
+        if self.pno:
+            parts.append(f"PNO={self.pno}")
         return ";".join(parts)

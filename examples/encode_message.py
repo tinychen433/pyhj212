@@ -8,18 +8,17 @@ from pyhj212.protocol.encoder import Encoder
 def main() -> None:
     """Demonstrate encoding a Message to a raw HJ 212-2017 string."""
     header = Header(
-        pn="21",
-        cn="2011",
-        pw="123456",
-        mn="ST0001",
+        cn="1062",
+        pw="100000",
+        mn="010000A8900016F000169DC0",
         st="32",
-        flag=4,
-        pno=1,
+        flag=5,
+        qn="20160801085857223",
     )
 
     message = Message(
         header=header,
-        data="w01001-Rtd=12.5;w01002-Rtd=34.0",
+        data="RtdInterval=30",
     )
 
     encoder = Encoder()
