@@ -12,7 +12,7 @@ class CPEncoder:
         """Encode a list of CPField objects into a CP string.
 
         Supports both flat fields (from ``parse()``) and grouped fields
-        with children (from ``parse_grouped()``).
+        with children (from ``parse()``).
 
         Args:
             fields: List of CPField objects to encode.

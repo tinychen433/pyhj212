@@ -155,11 +155,11 @@ class TestCPEncode:
         assert result == "DataTime=20261118134500;tn0112-Rtd=228.200,tn0112-Flag=N;RtdInterval=300"
 
     def test_encode_grouped_roundtrip(self) -> None:
-        """parse_grouped → encode → parse_grouped roundtrip."""
+        """parse → encode → parse roundtrip."""
         cp = "DataTime=20261118134500;tn0112-Rtd=228.200,tn0112-Flag=N;tn0110-Rtd=229.100,tn0110-Flag=N"
-        original = self.parser.parse_grouped(cp)
+        original = self.parser.parse(cp)
         encoded = self.encoder.encode(original)
-        decoded = self.parser.parse_grouped(encoded)
+        decoded = self.parser.parse(encoded)
 
         assert len(decoded) == len(original)
         for orig, dec in zip(original, decoded):
