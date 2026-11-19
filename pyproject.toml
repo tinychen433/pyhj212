@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "A Python library for HJ212 protocol encoding, decoding, validation, and communication."
 readme = "README.md"
 license = "MIT"
-requires-python = ">=3.10"
+requires-python = ">=3.8"
 authors = [
     {name = "tinychen", email = "weinanmay@gmail.com"},
 ]
@@ -16,6 +16,8 @@ classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -40,7 +42,7 @@ dev = [
 where = ["src"]
 
 [tool.ruff]
-target-version = "py310"
+target-version = "py38"
 line-length = 100
 
 [tool.ruff.lint]
@@ -51,7 +53,7 @@ ignore = ["E501"]
 known-first-party = ["pyhj212"]
 
 [tool.mypy]
-python_version = "3.10"
+python_version = "3.8"
 strict = true
 warn_return_any = true
 warn_unused_configs = true

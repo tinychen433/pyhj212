@@ -45,7 +45,7 @@ class TestCPEncode:
         decoded = self.parser.parse(encoded)
 
         assert len(decoded) == len(fields)
-        for orig, enc in zip(fields, decoded, strict=True):
+        for orig, enc in zip(fields, decoded):
             assert orig.key == enc.key
             assert orig.value == enc.value
 
@@ -112,7 +112,7 @@ class TestCPEncode:
         decoded = self.parser.parse(encoded)
 
         assert len(decoded) == len(original)
-        for orig, dec in zip(original, decoded, strict=True):
+        for orig, dec in zip(original, decoded):
             assert orig.key == dec.key
             assert orig.value == dec.value
 
@@ -124,3 +124,46 @@ class TestCPEncode:
         result = self.encoder.encode(fields)
         assert result == "RtdInterval=30"
         assert ";" not in result  # no trailing separator
+
+    def test_encode_grouped_fields(self) -> None:
+        """Grouped fields with children encode to factor-attr=value format."""
+        fields = [
+            CPField(
+                key="tn0112",
+                children=[
+                    CPField(key="Rtd", value="228.200"),
+                    CPField(key="Flag", value="N"),
+                ],
+            ),
+        ]
+        assert self.encoder.encode(fields) == "tn0112-Rtd=228.200,tn0112-Flag=N"
+
+    def test_encode_mixed_flat_and_grouped(self) -> None:
+        """Flat and grouped fields coexist in encoded output."""
+        fields = [
+            CPField(key="DataTime", value="20261118134500"),
+            CPField(
+                key="tn0112",
+                children=[
+                    CPField(key="Rtd", value="228.200"),
+                    CPField(key="Flag", value="N"),
+                ],
+            ),
+            CPField(key="RtdInterval", value="300"),
+        ]
+        result = self.encoder.encode(fields)
+        assert result == "DataTime=20261118134500;tn0112-Rtd=228.200,tn0112-Flag=N;RtdInterval=300"
+
+    def test_encode_grouped_roundtrip(self) -> None:
+        """parse_grouped → encode → parse_grouped roundtrip."""
+        cp = "DataTime=20261118134500;tn0112-Rtd=228.200,tn0112-Flag=N;tn0110-Rtd=229.100,tn0110-Flag=N"
+        original = self.parser.parse_grouped(cp)
+        encoded = self.encoder.encode(original)
+        decoded = self.parser.parse_grouped(encoded)
+
+        assert len(decoded) == len(original)
+        for orig, dec in zip(original, decoded):
+            assert orig.key == dec.key
+            for oc, dc in zip(orig.children, dec.children):
+                assert oc.key == dc.key
+                assert oc.value == dc.value
