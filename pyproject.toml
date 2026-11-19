@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pyhj212"
-version = "0.1.0"
+version = "0.1.1"
 description = "A Python library for HJ212 protocol encoding, decoding, validation, and communication."
 readme = "README.md"
 license = {text = "MIT"}
@@ -73,3 +73,8 @@ python_functions = ["test_*"]
 
 [tool.hypothesis]
 database = ".hypothesis"
+
+[dependency-groups]
+dev = [
+    "twine>=6.1.0",
+]
