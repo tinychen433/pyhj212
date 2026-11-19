@@ -7,7 +7,7 @@ name = "pyhj212"
 version = "0.1.0"
 description = "A Python library for HJ212 protocol encoding, decoding, validation, and communication."
 readme = "README.md"
-license = "MIT"
+license = {text = "MIT"}
 requires-python = ">=3.8"
 authors = [
     {name = "tinychen", email = "weinanmay@gmail.com"},
