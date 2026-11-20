@@ -1,24 +1,27 @@
-"""Example: Parse an HJ 212-2017 message string."""
+"""Example: Parse an HJ 212-2017 message."""
 
-from pyhj212.protocol.parser import Parser
+from pyhj212 import parse
 
 
 def main() -> None:
-    """Demonstrate parsing a raw HJ 212-2017 message."""
-    raw = "##0857QN=20260902083001000;ST=31;CN=2051;PW=123456;MN=YSRDAQ07ST00002713;Flag=5;CP=&&PNO=000000004;DataTime=20260902082000;RtdInterval=300;RestartTime=20260902064138;a34004-Avg=3.000;a34002-Avg=4.000;ys0017-Avg=5.000;ys0019-Avg=5.000;ys0018-Avg=-99.000;ys0020-Avg=-99.000;ys0021-Avg=5.000;a05024-Avg=-99.00;a21026-Avg=-99.00;a21004-Avg=-99.0;a21005-Avg=-99.000;a99054-Avg=-99.000;ys0025-Avg=0.000;ys0026-Avg=0.000;ys0023-Avg=0.000;ys0024-Avg=0.000;ys0027-Avg=0.000;ys0028-Avg=0.000;ys0029-Avg=0.000;ys0030-Avg=0.000;ys0031-Avg=0.000;ys0032-Avg=0.000;a01012-Rtd=36.0;a01014-Rtd=30.4;a01001-Rtd=24.4;a01002-Rtd=59.6;ys0111-Rtd=24.4;ys0007-Rtd=116.489983;ys0008-Rtd=39.902966;ys0034-Rtd=-99.000;a01006-Rtd=-99.000;a01007-Avg=-99.0;a01008-Avg=-99;ys0009-Rtd=31;ys0013-Rtd=0;ys0010-Rtd=0;ys0011-Rtd=75;ys0012-Rtd=50;ys0002-Rtd=162.005;ys0014-Rtd=89860473102590002828&&A141\r\n"
+    """Demonstrate message parsing with automatic CP field extraction."""
+    raw = (
+        "##0101QN=20160801085857223;ST=32;CN=1062;PW=100000;"
+        "MN=010000A8900016F000169DC0;Flag=5;CP=&&RtdInterval=30&&"
+        "1C80\r\n"
+    )
 
-    parser = Parser()
-    message = parser.parse(raw)
+    msg = parse(raw)
 
-    print(f"Header: {message.header}")
-    print(f"Data: {message.data}")
-    print(f"CRC: {message.crc}")
+    print(f"CN: {msg.header.cn}")
+    print(f"MN: {msg.header.mn}")
+    print(f"Data: {msg.data}")
+    print(f"CRC: {msg.crc}")
+    print()
 
-    raw = "##0439QN=20261118134524147;ST=80;CN=2011;PW=123456;MN=ZC10002443;FLAG=5;CP=&&DataTime=20261118134500;tn0112-Rtd=228.200,tn0112-Flag=N;tn0110-Rtd=229.100,tn0110-Flag=N;tn0109-Rtd=1.000,tn0109-Flag=N;tn0105-Rtd=0.000,tn0105-Flag=N;tn0107-Rtd=0.0,tn0107-Flag=N;tn0111-Rtd=230.000,tn0111-Flag=N;tn0108-Rtd=0.0,tn0108-Flag=N;tn0101-Rtd=0.000,tn0101-Flag=N;tn0103-Rtd=0.000,tn0103-Flag=N;tn0102-Rtd=0.000,tn0102-Flag=N;tn0106-Rtd=0.000,tn0106-Flag=N&&4e00\r\n"
-    message = parser.parse(raw)
-    print(f"Header: {message.header}")
-    print(f"Data: {message.data}")
-    print(f"CRC: {message.crc}")
+    # CP fields are auto-parsed
+    for f in msg.cp_fields:
+        print(f.to_dict())
 
 
 if __name__ == "__main__":

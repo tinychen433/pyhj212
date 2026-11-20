@@ -3,8 +3,12 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from typing import TYPE_CHECKING
 
 from pyhj212.models.header import Header
+
+if TYPE_CHECKING:
+    from pyhj212.cp.models import CPField
 
 
 @dataclass(frozen=True)
@@ -24,3 +28,14 @@ class Message:
     cp: str = ""
     crc: str = ""
     raw: str = field(default="", repr=False, compare=False)
+
+    @property
+    def cp_fields(self) -> list[CPField]:
+        """Parse the data payload into grouped CPField objects.
+
+        Returns:
+            List of CPField objects parsed from the data section.
+        """
+        from pyhj212.cp.parser import CPParser
+
+        return CPParser().parse(self.data) if self.data else []

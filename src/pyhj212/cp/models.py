@@ -52,3 +52,26 @@ class CPField:
         if self.children:
             return {self.key: {c.key: c.value for c in self.children}}
         return {self.key: self.value} if self.value else {self.key: ""}
+
+    @classmethod
+    def from_dict(cls, d: dict[str, object]) -> CPField:
+        """Create a CPField from a dict produced by ``to_dict()``.
+
+        Args:
+            d: A single-key dict like ``{"tn0112": {"Rtd": "228.200"}}``
+               (grouped) or ``{"DataTime": "20261118134500"}`` (flat).
+
+        Returns:
+            A CPField instance.
+
+        Example:
+            >>> CPField.from_dict({"tn0112": {"Rtd": "228.200", "Flag": "N"}})
+            CPField(key='tn0112', value='', children=[...])
+            >>> CPField.from_dict({"DataTime": "20261118134500"})
+            CPField(key='DataTime', value='20261118134500')
+        """
+        key, val = next(iter(d.items()))
+        if isinstance(val, dict):
+            children = [cls(key=k, value=str(v)) for k, v in val.items()]
+            return cls(key=key, children=children)
+        return cls(key=key, value=str(val) if val is not None else "")

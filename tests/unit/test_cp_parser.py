@@ -208,6 +208,34 @@ class TestParseCP:
         parent = CPField(key="solo", value="test")
         assert parent.get_child("anything") is None
 
+    def test_from_dict_flat(self) -> None:
+        """CPField.from_dict creates a flat field."""
+        f = CPField.from_dict({"DataTime": "20261118134500"})
+        assert f.key == "DataTime"
+        assert f.value == "20261118134500"
+        assert f.children == []
+
+    def test_from_dict_grouped(self) -> None:
+        """CPField.from_dict creates a field with children."""
+        f = CPField.from_dict({"tn0112": {"Rtd": "228.200", "Flag": "N"}})
+        assert f.key == "tn0112"
+        assert f.value == ""
+        assert len(f.children) == 2
+        assert f.get_child("Rtd").value == "228.200"
+        assert f.get_child("Flag").value == "N"
+
+    def test_to_dict_from_dict_roundtrip(self) -> None:
+        """to_dict → from_dict → to_dict produces same result."""
+        original = {"tn0112": {"Rtd": "228.200", "Flag": "N"}}
+        f = CPField.from_dict(original)
+        assert f.to_dict() == original
+
+    def test_from_dict_empty_value(self) -> None:
+        """CPField.from_dict with empty string value."""
+        f = CPField.from_dict({"Marker": ""})
+        assert f.key == "Marker"
+        assert f.value == ""
+
 
 # ---------------------------------------------------------------------------
 # CPField.to_dict() tests
