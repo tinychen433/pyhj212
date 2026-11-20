@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pyhj212"
-version = "0.1.1"
+version = "0.1.2"
 description = "A Python library for HJ212 protocol encoding, decoding, validation, and communication."
 readme = "README.md"
 license = {text = "MIT"}
